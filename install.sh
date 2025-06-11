@@ -666,8 +666,11 @@ main() {
 				wget "${TOOLS_URL}"
 				verify_download "${TOOLS_FILENAME}"
 				sudo dpkg -i "${TOOLS_FILENAME}"
-				sudo systemctl enable ${TT_SYSTEMD_NOW} tenstorrent-hugepages.service
-				sudo systemctl enable ${TT_SYSTEMD_NOW} 'dev-hugepages\x2d1G.mount'
+				if [[ "${SYSTEMD_NO}" != 0 ]]
+				then
+					sudo systemctl enable ${TT_SYSTEMD_NOW} tenstorrent-hugepages.service
+					sudo systemctl enable ${TT_SYSTEMD_NOW} 'dev-hugepages\x2d1G.mount'
+				fi
 				;;
 			"fedora"|"rhel"|"centos")
 				TOOLS_FILENAME="tenstorrent-tools-${SYSTOOLS_VERSION}-1.noarch.rpm"
@@ -675,8 +678,11 @@ main() {
 				wget "${TOOLS_URL}"
 				verify_download "${TOOLS_FILENAME}"
 				sudo dnf install -y "${TOOLS_FILENAME}"
-				sudo systemctl enable ${TT_SYSTEMD_NOW} tenstorrent-hugepages.service
-				sudo systemctl enable ${TT_SYSTEMD_NOW} 'dev-hugepages\x2d1G.mount'
+				if [[ "${SYSTEMD_NO}" != 0 ]]
+				then
+					sudo systemctl enable ${TT_SYSTEMD_NOW} tenstorrent-hugepages.service
+					sudo systemctl enable ${TT_SYSTEMD_NOW} 'dev-hugepages\x2d1G.mount'
+				fi
 				;;
 			*)
 				error "This distro is unsupported. Skipping HugePages install!"
