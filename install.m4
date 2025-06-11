@@ -196,6 +196,8 @@ if [[ "${_arg_mode_non_interactive}" = "on" ]]; then
 fi
 
 TT_SYSTEMD_NOW="${SYSTEMD_NOW:---now}"
+TT_PIPX_INIT_EXTRAS="${PIPX_INIT_EXTRAS:- }"
+TT_PIPX_INSTALL_EXTRAS="${PIPX_INSTALL_EXTRAS:- }"
 
 # ========================= Main Script =========================
 
@@ -649,11 +651,11 @@ main() {
 			;;
 		"pipx")
 			log "Using pipx for isolated package installation"
-			pipx ensurepath
+			pipx ensurepath ${TT_PIPX_INIT_EXTRAS}
 			# Enable the pipx path in this shell session
 			export PATH="${PATH}:${HOME}/.local/bin/"
 			INSTALLED_IN_VENV=1
-			PYTHON_INSTALL_CMD="pipx install"
+			PYTHON_INSTALL_CMD="pipx install ${TT_PIPX_INSTALL_EXTRAS}"
 			;;
 		*|"new-venv")
 			log "Setting up new Python virtual environment"
