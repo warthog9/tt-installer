@@ -681,7 +681,8 @@ main() {
 				sudo dkms remove "tenstorrent/${KMD_INSTALLED_VERSION}" --all
 				git clone --branch "ttkmd-${KMD_VERSION}" https://github.com/tenstorrent/tt-kmd.git
 				sudo dkms add tt-kmd
-				sudo dkms install "tenstorrent/${KMD_VERSION}"
+				#sudo dkms install "tenstorrent/${KMD_VERSION}"
+				sudo dkms autoinstall
 				sudo modprobe tenstorrent
 			else
 				warn "Skipping KMD installation"
